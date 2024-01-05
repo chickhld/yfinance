@@ -1,8 +1,8 @@
 import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns; 
-
+import seaborn as sns
+import random
 sns.set()
 
 # Date must be in the fromat ("%Y-%m-%d") That is, year-month-day
@@ -13,7 +13,8 @@ sns.set()
 start_date_month = '-1-1'
 end_date_month = '-12-30'
 
-start_year = 2020
+# Set Year range (eg 5 years)
+start_year = 2017
 end_year = 2023
 range_year = end_year - start_year
 
@@ -38,7 +39,10 @@ for x in range(range_year):
     end_range_date.append(end_date)
 
     # extract stock data from yahoo finance
-    datadownland = yf.download(tickers = "^AORD", start = start_date, end = end_date)
+    #stock_name = "^AORD"
+    stock_name = "CBA.AX"
+
+    datadownland = yf.download(tickers = stock_name, start = start_date, end = end_date)
     datalist.append(datadownland)
 
     # print out downloaded columns
@@ -98,8 +102,17 @@ for x in range(range_year):
     # Single line plot
     #sns.lineplot(data=datadownland,x="day",y="High",color='blue')
 
+    # different ways to define palette color
     #sns.lineplot(data=datadownland,x="day",y="High",hue='year', palette='spring')
-    sns.lineplot(data=datadownland,x="day",y="High",hue='year', palette=['magenta', 'deepskyblue', 'yellowgreen'])
+    #sns.lineplot(data=datadownland,x="day",y="High",hue='year', palette=['magenta', 'deepskyblue', 'yellowgreen'])
+
+    # Generate random numbers for colors
+    r_rl = random.randint(0,255)
+    g_rl = random.randint(0,255) 
+    b_rl = random.randint(0,255)
+
+    # Plot the line
+    sns.lineplot(data=datadownland,x="day",y="High",hue='year', palette=[(r_rl/255, g_rl/255, b_rl/255)])
 
 
 plt.title("All Ordinaries Chart",size='x-large',color='blue')
