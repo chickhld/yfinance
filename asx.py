@@ -13,7 +13,7 @@ sns.set()
 start_date_month = '-1-1'
 end_date_month = '-12-30'
 
-start_year = 2020
+start_year = 2022
 end_year = 2023
 range_year = end_year - start_year
 
@@ -26,6 +26,8 @@ plt.figure(figsize=(14,5))
 sns.set_style("ticks")
 
 for x in range(range_year):
+
+    # Get dates
     start_date = str(start_year + x) + start_date_month
     end_date = str(start_year + x) + end_date_month
     print("start_date:" + start_date)
@@ -33,9 +35,11 @@ for x in range(range_year):
     start_range_date.append(start_date)
     end_range_date.append(end_date)
 
+    # extract stock data from yahoo finance
     datadownland = yf.download(tickers = "AMZN", start = start_date, end = end_date)
     datalist.append(datadownland)
 
+    # print out downloaded columns
     print('data fields downloaded:', set(datadownland.columns.get_level_values(0)))
 
     #for col in datadownland.columns:
@@ -46,11 +50,27 @@ for x in range(range_year):
 
     #print(datadownland.to_string())
 
-    datadownland.head()
+    # print entries (head takes out the first 5 entries (rows))
+    print(datadownland.head())
     
+    # print type
+    print(type(datadownland))
 
-
+    # print size
+    print(datadownland.shape)
     
+    # print 
+    print(datadownland.columns)
+
+    # print types of columns
+    print(datadownland.dtypes)
+
+    # print 
+    print(datadownland.info())
+
+    # print index
+    print(datadownland.index)
+
     sns.lineplot(data=datadownland,x="Date",y="High",color='blue',label='AMZ')
 
 
